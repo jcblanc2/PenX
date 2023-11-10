@@ -1,6 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom"
 
 const Register = () => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        await fetch("http://localhost:4000/register", {
+            method: 'POST',
+            body: JSON.stringify({ name, email, password }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+    }
+
     return (
         <section className="flex flex-col md:flex-row h-screen items-center">
             <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12
@@ -9,22 +24,22 @@ const Register = () => {
                 <div className="w-full h-100">
                     <h1 className="text-2xl md:text-2xl font-bold leading-tight mt-12 text-center text-[#333]">Register</h1>
 
-                    <form className="mt-6" action="#" method="POST">
+                    <form className="mt-6" action="#" method="POST" onSubmit={onSubmit}>
                         <div>
-                            <input type="text" name="" id="text" placeholder="Enter Full Name" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-[#555] focus:bg-white focus:outline-none" autoFocus required />
+                            <input type="text" name="" id="text" placeholder="Enter Full Name" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-[#555] focus:bg-white focus:outline-none" autoFocus required value={name} onChange={(e) => { setName(e.target.value) }} />
                         </div>
 
                         <div className="my-4">
-                            <input type="email" name="" id="email" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-[#555] focus:bg-white focus:outline-none" required />
+                            <input type="email" name="" id="email" placeholder="Enter Email Address" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-[#555] focus:bg-white focus:outline-none" required value={email} onChange={(e) => { setEmail(e.target.value) }} />
                         </div>
 
                         <div >
                             <input type="password" name="" id="password" placeholder="Enter Password" minLength="6" className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-[#555]
-                focus:bg-white focus:outline-none" required />
+                focus:bg-white focus:outline-none" required value={password} onChange={(e) => { setPassword(e.target.value) }} />
                         </div>
 
 
-                        <button type="submit" className="w-full block bg-[#555] hover:bg-[#666] focus:bg-[#666] text-white font-semibold rounded-lg px-4 py-3 mt-6">Log In</button>
+                        <button type="submit" className="w-full block bg-[#555] hover:bg-[#666] focus:bg-[#666] text-white font-semibold rounded-lg px-4 py-3 mt-6">Register</button>
                     </form>
 
 
