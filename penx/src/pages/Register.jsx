@@ -1,19 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import Alert from "../components/Alert";
 
 const Register = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch("http://localhost:4000/register", {
+        const response = await fetch("http://localhost:4000/api/register", {
             method: 'POST',
             body: JSON.stringify({ name, email, password }),
             headers: { 'Content-Type': 'application/json' }
-        })
+        });
+
+        const responseBody = await response.json();
+        if (response.ok === false) {
+            setErrorMessage(responseBody.message)
+            setTimeout(() => {
+                setErrorMessage("");
+            }, 3000);
+        }
+
+        navigate("/");
     }
 
     return (
@@ -44,9 +57,12 @@ const Register = () => {
 
 
                     <p className="mt-5 text-center text-[#333]">Already have an account? <Link to="/login" className="text-[#555] hover:text-[#666] font-semibold">Log In</Link></p>
+
+                    <div className="mt-5">
+                        {errorMessage && (<Alert message={errorMessage} />)}
+                    </div>
                 </div>
             </div>
-
         </section>
 
     )

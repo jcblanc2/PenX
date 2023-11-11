@@ -1,18 +1,34 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { userContext } from "../UserContext";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const { setUserInfo, userInfo } = useContext(userContext);
+    const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        await fetch("http://localhost:4000/login", {
+        const response = await fetch("http://localhost:4000/api/login", {
             method: 'POST',
             body: JSON.stringify({ email, password }),
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            credentials: "include"
         })
+
+        const responseBody = await response.json();
+        setUserInfo(responseBody);
+        if (response.ok === false) {
+            setErrorMessage(responseBody.message)
+            setTimeout(() => {
+                setErrorMessage("");
+            }, 3000);
+        }
+
+        navigate("/");
     }
 
     return (
@@ -40,6 +56,10 @@ const Login = () => {
 
                     <p className="mt-5 text-center text-[#333]">Need an account? <Link to="/register" className="text-[#555] hover:text-[#666] font-semibold">Create an
                         account</Link></p>
+
+                    <div className="mt-5">
+                        {errorMessage && (<Alert message={errorMessage} />)}
+                    </div>
                 </div>
             </div>
         </main>
