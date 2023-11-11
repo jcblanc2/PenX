@@ -3,14 +3,16 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { modules, formats } from '../constants';
 import NavBar from '../components/NavBar';
+import { useNavigate } from 'react-router-dom';
 
 const Create = () => {
     const [title, setTitle] = useState('');
     const [subtitle, setSubtitle] = useState('');
     const [content, setContent] = useState('');
     const [files, setFiles] = useState('');
+    const navigate = useNavigate();
 
-    const onPublish = (e) => { 
+    const onPublish = async (e) => {
         const data = new FormData();
         data.set('title', title);
         data.set('subtitle', subtitle);
@@ -19,10 +21,14 @@ const Create = () => {
 
         e.preventDefault();
 
-        fetch('http://localhost:4000/post/create', {
+        const response = await fetch('http://localhost:4000/post/create', {
             method: 'POST',
             body: data
         });
+
+        if (response.ok) {
+            navigate('/');
+        }
     }
 
     return (
@@ -45,16 +51,14 @@ const Create = () => {
                 <input
                     type="file"
                     name="file"
-                    id="file" 
-                    onChange={(e) => setFiles(e.target.files)}/>
+                    id="file"
+                    onChange={(e) => setFiles(e.target.files)} />
 
                 <ReactQuill
                     value={content}
                     modules={modules}
                     formats={formats}
                     onChange={newValue => setContent(newValue)} />
-
-
             </form>
         </main >
     )
