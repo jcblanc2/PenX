@@ -1,10 +1,62 @@
-import React from 'react'
+import { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { modules, formats } from '../constants';
+import NavBar from '../components/NavBar';
 
 const Create = () => {
+    const [title, setTitle] = useState('');
+    const [subtitle, setSubtitle] = useState('');
+    const [content, setContent] = useState('');
+    const [files, setFiles] = useState('');
+
+    const onPublish = (e) => { 
+        const data = new FormData();
+        data.set('title', title);
+        data.set('subtitle', subtitle);
+        data.set('content', content);
+        data.set('file', files[0]);
+
+        e.preventDefault();
+
+        fetch('http://localhost:4000/post/create', {
+            method: 'POST',
+            body: data
+        });
+    }
+
     return (
-        <div>
-            jj
-        </div>
+        <main className='p-2 my-0 mx-auto max-w-[750px]' >
+            <NavBar writing={true} handlePublish={onPublish} />
+
+            <form className=' mt-16 '>
+                <input
+                    type="title"
+                    placeholder='Title'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} />
+
+                <input
+                    type="text"
+                    placeholder='Subtitle'
+                    value={subtitle}
+                    onChange={(e) => setSubtitle(e.target.value)} />
+
+                <input
+                    type="file"
+                    name="file"
+                    id="file" 
+                    onChange={(e) => setFiles(e.target.files)}/>
+
+                <ReactQuill
+                    value={content}
+                    modules={modules}
+                    formats={formats}
+                    onChange={newValue => setContent(newValue)} />
+
+
+            </form>
+        </main >
     )
 }
 

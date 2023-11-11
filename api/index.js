@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/post');
 const cookieParser = require('cookie-parser');
 require('dotenv/config');
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 
 // Routes Middleware
 app.use('/api', authRoute);
+app.use('/post', postRoute);
 
 app.listen(process.env.PORT, () => {
     console.log("Server is running! http://localhost:4000");
