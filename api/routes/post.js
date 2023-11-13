@@ -58,5 +58,19 @@ router.get('/posts', async (req, res) => {
 });
 
 
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const post = await postModel
+            .findById(id)
+            .populate('author', ['name']);
+            
+        res.status(200).send(post);
+    }
+    catch (err) {
+        res.status(400).send({ message: err });
+    }
+});
 
 module.exports = router;
