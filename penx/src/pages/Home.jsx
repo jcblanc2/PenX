@@ -23,6 +23,7 @@ const Home = () => {
             {posts.length > 0 && posts.map(post => (
                 <Article
                     key={post._id}
+                    id={post._id}
                     userName={post.author.name}
                     cover={post.cover}
                     title={post.title}

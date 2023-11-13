@@ -1,8 +1,14 @@
-import { formatDate, formatText } from "../utils/format";
+import { formatDate, removeHtmlTags } from "../utils/format";
+import { useNavigate } from 'react-router-dom'
 
-const Article = ({userName, title, date, content, cover }) => {
+const Article = ({ id, userName, title, date, content, cover }) => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`post/${id}`);
+    }
+
     return (
-        <div className="flex mb-5">
+        <div className="flex mb-5 cursor-pointer" onClick={handleClick}>
             <div>
                 <img className="w-[80%] ml-5" src={"http://localhost:4000/" + cover} alt="Image" />
             </div>
@@ -13,7 +19,7 @@ const Article = ({userName, title, date, content, cover }) => {
                     <span className="font-semibold text-[#333] text-[1rem]">{userName}</span> ·
                     <time className=" "> {formatDate(date)}</time>
                 </p>
-                <p className=" leading-20">{formatText(content)}</p>
+                <p className=" leading-20">{removeHtmlTags(content)}</p>
             </div>
         </div>
     )
