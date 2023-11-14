@@ -18,18 +18,20 @@ const Home = () => {
 
     return (
         <main className="p-2 my-0 mx-auto max-w-[700px]">
-            <NavBar/>
+            <NavBar />
 
-            {posts.length > 0 && posts.map(post => (
-                <Article
-                    key={post._id}
-                    id={post._id}
-                    userName={post.author.name}
-                    cover={post.cover}
-                    title={post.title}
-                    content={post.content} 
-                    date={post.createdAt}/>
-            ))}
+            <div className=" mt-16">
+                {posts.length > 0 && posts.map(post => (
+                    <Article
+                        key={post._id}
+                        id={post._id}
+                        userName={post.author.name}
+                        cover={post.cover}
+                        title={post.title}
+                        content={post.content}
+                        date={post.createdAt} />
+                ))}
+            </div>
         </main>
     )
 }
