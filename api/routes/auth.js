@@ -28,10 +28,13 @@ router.post("/register", async (req, res) => {
         password: hashedPassword,
     });
 
+    // Create and assign a token
+    const token = JWT.sign({ name: user.name, userId: user._id }, process.env.JWT_SECRET);
+
     // add the user to the database
     try {
         const userSaved = await user.save();
-        res.status(201).send({ userId: user._id });
+        res.cookie('token', token).status(200).json({ userId: user._id });
     }
     catch (err) {
         res.status(400).send({ message: err });
@@ -59,7 +62,7 @@ router.post("/login", async (req, res) => {
 
     try {
         res.cookie('token', token).status(200).json({
-            name: user.name, 
+            name: user.name,
             userId: user._id
         });
     }
@@ -70,11 +73,15 @@ router.post("/login", async (req, res) => {
 
 // profile router
 router.get("/profile", async (req, res) => {
-    const { token } = req.cookies;
 
-    const info = JWT.verify(token, process.env.JWT_SECRET);
+    if (req.cookies.token) {
+        const { token } = req.cookies;
+        const info = JWT.verify(token, process.env.JWT_SECRET);
+        return res.json(info);
 
-    res.json(info);
+    }
+
+    res.json(null);
 });
 
 // logout router

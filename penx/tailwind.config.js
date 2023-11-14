@@ -27,7 +27,8 @@ export default {
         "light-gray": "#7D7987",
       },
       screens: {
-        "wide": "1440px"
+        "wide": "1440px",
+        'mb': {'max': '500px'},
       }
     },
   },
