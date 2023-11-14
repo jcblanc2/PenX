@@ -20,13 +20,13 @@ router.post("/create", uploadMiddleware.single('file'), async (req, res) => {
     fs.renameSync(path, newPath);
 
     // create and add the post to the database
-    const { title, subtitle, content } = req.body;
+    const { title, subTitle, content } = req.body;
     const { token } = req.cookies;
     const info = JWT.verify(token, process.env.JWT_SECRET);
 
     const post = new postModel({
         title: title,
-        subtitle: subtitle,
+        subTitle: subTitle,
         content: content,
         cover: newPath,
         author: info.userId
@@ -41,7 +41,48 @@ router.post("/create", uploadMiddleware.single('file'), async (req, res) => {
     }
 });
 
+// update post
+// create post router
+router.put("/update", uploadMiddleware.single('file'), async (req, res) => {
+    let newPath = null;
 
+    if (req.file) {
+        // get the extension of the file
+        const { originalname, path } = req.file;
+        const parts = originalname.split('.');
+        const etx = parts[parts.length - 1];
+
+        // rename the file
+        newPath = path + '.' + etx;
+        fs.renameSync(path, newPath);
+    }
+
+    // create and add the post to the database
+    const { title, subTitle, content, id } = req.body;
+    const { token } = req.cookies;
+    const info = JWT.verify(token, process.env.JWT_SECRET);
+    const postDoc = await postModel.findById(id);
+    const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.userId);
+
+    if (!isAuthor) {
+        return res.status(400).send({ message: "Unauthorize" });
+    }
+
+    try {
+        await postDoc.updateOne({
+            title,
+            subTitle,
+            content,
+            cover: newPath ? newPath : postDoc.cover,
+        });
+        res.status(200).send({ message: "Ok" });
+    }
+    catch (err) {
+        res.status(400).send({ message: err });
+    }
+});
+
+// get all posts
 router.get('/posts', async (req, res) => {
     try {
         const allPosts = await postModel
@@ -58,6 +99,7 @@ router.get('/posts', async (req, res) => {
 });
 
 
+// get post by id
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
@@ -65,7 +107,7 @@ router.get('/:id', async (req, res) => {
         const post = await postModel
             .findById(id)
             .populate('author', ['name']);
-            
+
         res.status(200).send(post);
     }
     catch (err) {

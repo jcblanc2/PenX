@@ -18,7 +18,7 @@ const Home = () => {
 
     return (
         <main className="p-2 my-0 mx-auto max-w-[700px]">
-            <NavBar writing={false} />
+            <NavBar/>
 
             {posts.length > 0 && posts.map(post => (
                 <Article
