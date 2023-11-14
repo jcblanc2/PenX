@@ -22,7 +22,6 @@ const Home = () => {
         fetchPots();
     }, []);
 
-
     return (
         <main className="p-2 my-0 mx-auto max-w-[900px]">
             <NavBar />
@@ -40,8 +39,7 @@ const Home = () => {
                         className="block w-[300px] p-4 ps-10 text-sm text-[#333] border border-gray-300 rounded-lg bg-gray-50 focus:outline-none"
                         placeholder="Search"
                         required
-                        onChange={(e) => setKeyword(e.target.value)}
-                        />
+                        onChange={(e) => setKeyword(e.target.value)}/>
                 </div>
             </form>
 
