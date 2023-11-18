@@ -20,6 +20,6 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use('/api', authRoute);
 app.use('/post', postRoute);
 
-app.listen(process.env.PORT, () => {
+app.listen(4000, () => {
     console.log("Server is running! http://localhost:4000");
 });
