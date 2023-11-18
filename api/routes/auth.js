@@ -35,7 +35,8 @@ router.post("/register", async (req, res) => {
     // add the user to the database
     try {
         const userSaved = await user.save();
-        res.cookie('token', token).status(200).json({ userId: user._id });
+        res.cookie('token', token, { httpOnly: true,  sameSite: 'None', secure: true });
+        res.status(200).json({ userId: user._id });
     }
     catch (err) {
         res.status(400).send({ message: err });
@@ -62,7 +63,7 @@ router.post("/login", async (req, res) => {
     const token = JWT.sign({ name: user.name, userId: user._id }, process.env.JWT_SECRET);
 
     try {
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, sameSite: 'None', secure: true });
+        res.cookie('token', token, { httpOnly: true,  sameSite: 'None', secure: true });
 
         res.status(200).json({
             name: user.name,
