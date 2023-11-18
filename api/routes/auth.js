@@ -61,7 +61,6 @@ router.post("/login", async (req, res) => {
     const token = JWT.sign({ name: user.name, userId: user._id }, process.env.JWT_SECRET);
 
     try {
-        console.log(token);
         res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
 
         res.status(200).json({
@@ -76,6 +75,8 @@ router.post("/login", async (req, res) => {
 
 // profile router
 router.get("/profile", async (req, res) => {
+    const {token} = req.cookies;
+    console.log(token);
 
     if (req.cookies.token) {
         const { token } = req.cookies;
