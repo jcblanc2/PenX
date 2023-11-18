@@ -22,7 +22,7 @@ const connectDB = async () => {
 
 // Middleware
 app.use(express.json());
-app.use(cors({ credentials: true, origin: "https://tricky-vest-pike.cyclic.app/" }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
