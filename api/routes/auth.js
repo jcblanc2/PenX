@@ -2,11 +2,9 @@ const UserModel = require('../models/user');
 const router = require("express").Router();
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
 const { registerValidation, loginValidation } = require('../utils/validation');
 require('dotenv/config');
 
-router.use(cookieParser());
 
 // register router
 router.post("/register", async (req, res) => {
