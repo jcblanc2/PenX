@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
 // profile router
 router.get("/profile", async (req, res) => {
 
-    console.log(req.cookies);
+    console.log(req);
     if (req.cookies.token) {
         const { token } = req.cookies;
         const info = JWT.verify(token, process.env.JWT_SECRET);
