@@ -61,7 +61,10 @@ router.post("/login", async (req, res) => {
     const token = JWT.sign({ name: user.name, userId: user._id }, process.env.JWT_SECRET);
 
     try {
-        res.cookie('token', token).status(200).json({
+        console.log(token);
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
+
+        res.status(200).json({
             name: user.name,
             userId: user._id
         });
@@ -74,7 +77,6 @@ router.post("/login", async (req, res) => {
 // profile router
 router.get("/profile", async (req, res) => {
 
-    console.log(req);
     if (req.cookies.token) {
         const { token } = req.cookies;
         const info = JWT.verify(token, process.env.JWT_SECRET);
