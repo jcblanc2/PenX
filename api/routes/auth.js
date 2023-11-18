@@ -2,8 +2,11 @@ const UserModel = require('../models/user');
 const router = require("express").Router();
 const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const { registerValidation, loginValidation } = require('../utils/validation');
 require('dotenv/config');
+
+router.use(cookieParser());
 
 // register router
 router.post("/register", async (req, res) => {
@@ -61,7 +64,7 @@ router.post("/login", async (req, res) => {
     const token = JWT.sign({ name: user.name, userId: user._id }, process.env.JWT_SECRET);
 
     try {
-        res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); 
+        res.cookie('token', token, { httpOnly: true, maxAge: 3600000, sameSite: 'None', secure: true });
 
         res.status(200).json({
             name: user.name,
