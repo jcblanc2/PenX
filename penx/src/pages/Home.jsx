@@ -11,7 +11,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchPots = async () => {
-            const response = await fetch('http://localhost:4000/post/posts', {
+            const response = await fetch('https://tricky-vest-pike.cyclic.app/post/posts', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: "include",

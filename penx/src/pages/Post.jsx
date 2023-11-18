@@ -19,7 +19,7 @@ const Post = () => {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const response = await fetch(`http://localhost:4000/post/${id}`);
+            const response = await fetch(`https://tricky-vest-pike.cyclic.app/post/${id}`);
 
             const responseBody = await response.json();
             setPost(responseBody);
@@ -69,7 +69,7 @@ const Post = () => {
                 </header>
 
                 <section className="flex flex-col items-center justify-center py-5 mx-auto max-w-[700px]">
-                    <img className="w-[100%] ml-5 overflow-hidden pb-5" src={`http://localhost:4000/${post.cover}`} alt="Image" />
+                    <img className="w-[100%] ml-5 overflow-hidden pb-5" src={`https://tricky-vest-pike.cyclic.app/${post.cover}`} alt="Image" />
 
                     <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
                 </section>

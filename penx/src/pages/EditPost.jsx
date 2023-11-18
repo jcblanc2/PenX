@@ -39,7 +39,7 @@ const EditPost = () => {
 
         e.preventDefault();
 
-        const response = await fetch('http://localhost:4000/post/update', {
+        const response = await fetch('https://tricky-vest-pike.cyclic.app/post/update', {
             method: 'PUT',
             body: data,
             credentials: 'include',

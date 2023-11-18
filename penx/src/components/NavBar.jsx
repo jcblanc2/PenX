@@ -10,7 +10,7 @@ const NavBar = ({ label, handleClick, handleChange }) => {
 
     useEffect(() => {
         async function fetchProfile() {
-            const response = await fetch("http://localhost:4000/api/profile", {
+            const response = await fetch("https://tricky-vest-pike.cyclic.app/api/profile", {
                 credentials: "include"
             });
 
@@ -21,7 +21,7 @@ const NavBar = ({ label, handleClick, handleChange }) => {
     }, []);
 
     const onLogout = () => {
-        const response = fetch("http://localhost:4000/api/logout", {
+        const response = fetch("https://tricky-vest-pike.cyclic.app/api/logout", {
             credentials: "include",
             method: "POST",
         });
