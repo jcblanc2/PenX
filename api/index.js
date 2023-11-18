@@ -7,8 +7,18 @@ const postRoute = require('./routes/post');
 const cookieParser = require('cookie-parser');
 require('dotenv/config');
 
+const PORT = process.env.PORT || 4000
+
 // Connect to DB
-mongoose.connect(process.env.DB_CONNECTION_STRING).then(() => console.log("Connected to DB!"));
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+        console.log(error);
+        process.exit(1);
+    }
+}
 
 // Middleware
 app.use(express.json());
@@ -24,6 +34,9 @@ app.get('/', (req, res) => {
     res.json('Hello World!')
 });
 
-app.listen(4000, () => {
-    console.log("Server is running! http://localhost:4000");
-});
+//Connect to the database before listening
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
+})
