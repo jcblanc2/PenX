@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
 
 // profile router
 router.get("/profile", async (req, res) => {
-    const token = req.cookies.token; // Corrected this line
+    const token = req.cookies.token; 
     console.log('Token from cookies:', token);
 
     if (token) {
