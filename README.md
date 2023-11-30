@@ -71,9 +71,7 @@ Make sure you have the following installed before setting up the project:
      MONGODB_URI=...
      JWT_SECRET=your-secret-key
      ```
-
-     Adjust the values according to your preferences.
-
+     
 ## Usage
 
 1. Start the server:
