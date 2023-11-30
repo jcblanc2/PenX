@@ -32,7 +32,7 @@ A full-stack web application built using the MERN (MongoDB, Express.js, React, N
 
 Make sure you have the following installed before setting up the project:
 
-- Node.js and npm: [Download and install Node.js](https://nodejs.org/)
+- Node.js and npm: [Download and install Node.js](https://nodejs.org/en/)
 
 - MongoDB: [Install MongoDB](https://docs.mongodb.com/manual/installation/)
 
