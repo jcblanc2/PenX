@@ -15,7 +15,7 @@ const EditPost = () => {
 
     useEffect(() => {
         const fetchPost = async () => {
-            const response = await fetch(`http://localhost:4000/post/${id}`);
+            const response = await fetch(`https://tricky-vest-pike.cyclic.app/post/${id}`);
 
             const postInfo = await response.json();
             setTitle(postInfo.title);
