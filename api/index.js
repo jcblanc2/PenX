@@ -21,7 +21,7 @@ const connectDB = async () => {
 
 // Middleware
 app.use(express.json());
-app.use(cors({ credentials: true, origin: ["https://pen-x.vercel.app", "*"] }));
+app.use(cors({ credentials: true, origin: "https://pen-x.vercel.app" }));
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 
